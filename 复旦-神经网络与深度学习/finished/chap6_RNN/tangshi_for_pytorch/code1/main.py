@@ -4,7 +4,7 @@ import torch
 from torch.autograd import Variable
 import torch.optim as optim
 
-import rnn
+import code1.rnn as rnn
 
 start_token = 'G'
 end_token = 'E'
@@ -122,7 +122,7 @@ def generate_batch(batch_size, poems_vec, word_to_int):
 
 def run_training():
     # 处理数据集
-    poems_vector, word_to_int, vocabularies = process_poems2('./tangshi.txt')
+    poems_vector, word_to_int, vocabularies = process_poems2('./code1/tangshi.txt')
     # poems_vector, word_to_int, vocabularies = process_poems1('./poems.txt')
     # 生成batch
     print("finish  loadding data")
@@ -168,7 +168,7 @@ def run_training():
             optimizer.step()
 
             if batch % 20 ==0:
-                torch.save(rnn_model.state_dict(), './poem_generator_rnn')
+                torch.save(rnn_model.state_dict(), './code1/poem_generator_rnn')
                 print("finish  save model")
 
 
@@ -195,7 +195,7 @@ def pretty_print_poem(poem):  # 令打印的结果更工整
 
 
 def gen_poem(begin_word,model):
-    poems_vector, word_int_map, vocabularies = process_poems2('./tangshi.txt')  #  use the other dataset to train the network
+    poems_vector, word_int_map, vocabularies = process_poems2('./code1/tangshi.txt')  #  use the other dataset to train the network
     # poems_vector, word_int_map, vocabularies = process_poems1('./poems.txt')
     word_embedding = rnn.word_embedding(vocab_length=len(word_int_map) + 1, embedding_dim=100)
     rnn_model = rnn.RNN_model(batch_sz=64, vocab_len=len(word_int_map) + 1, word_embedding=word_embedding,
